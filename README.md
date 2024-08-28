@@ -43,7 +43,8 @@ The system uses the following SQLite tables:
 - **Borrow**: logs borrowing details.
 - **Book** Issues: records issues related to book borrowings, including fines and overdue notifications.
 
-![alt text](image.png)
+![image](https://github.com/user-attachments/assets/533c7cc5-d78e-431b-ae51-f2f6739130f5)
+
 <br>
 
 ## Sample Usage
