@@ -163,11 +163,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-#search record
-#data validation
-#export data to a csv file
-#user authentication
-#GUI
-
