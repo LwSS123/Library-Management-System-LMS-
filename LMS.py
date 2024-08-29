@@ -2,24 +2,42 @@ import sqlite3
 import tkinter as tk
 from tkinter import messagebox
 
+
+"""
+Deletes the specified SQLite database file from the filesystem.
+
+Args:
+    db_file (str): The path to the database file to be deleted.
+
+Raises:
+    OSError: If the file cannot be deleted due to being in use, 
+             lacking permissions, or not existing at the specified path.
+
+Example:
+    delete_database('LMS.db')  # Attempt to delete 'LMS.db'
+
+Note:
+    Use with caution as this operation is irreversible.
+"""
+# To use the delete_database function, uncomment the following line:
+
 # import os
 # def delete_database(db_file):
-#     """Delete the specified SQLite database file."""
 #     try:
 #         os.remove(db_file)
 #         print(f"Database '{db_file}' deleted successfully.")
 #     except OSError as e:
 #         print(f"Error: {e.strerror} - {e.filename}")
-
-# # Usage
 # delete_database('LMS.db')
 
+
+# Function to create necessary tables in the database if they do not exist
 
 def create_tables():
     conn = sqlite3.connect('LMS.db')
     cursor = conn.cursor()
 
-    # Create Members Table
+    # Create table for members
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS members (
         members_library_card_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,7 +45,7 @@ def create_tables():
         members_age INTEGER NOT NULL)
     ''')
 
-    # Create Authors Table
+    # Create table for authors
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS authors(
         author_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -35,7 +53,7 @@ def create_tables():
         author_age INTEGER NOT NULL)
     ''')
 
-    # Create Books Library Table
+    # Create table for books in the library
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS books_library(
         book_code INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,7 +64,7 @@ def create_tables():
         FOREIGN KEY (author_id) REFERENCES authors(author_id))
     ''')
 
-    # Create Borrow Table
+    # Create table for borrow records
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS borrow(
         borrow_no INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,7 +75,7 @@ def create_tables():
         FOREIGN KEY (members_library_card_id) REFERENCES members(members_library_card_id))
     ''')
 
-    # Create Book Issues Table
+    # Create table for tracking book issues
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS book_issues (
         issue_number INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -75,7 +93,7 @@ def create_tables():
     conn.commit()
     conn.close()
 
-
+# Function to add a new member to the members table
 def add_members(members_name, members_age):
     conn = sqlite3.connect('LMS.db')
     cursor = conn.cursor()
@@ -84,6 +102,7 @@ def add_members(members_name, members_age):
     conn.close()
     print(f"User {members_name} added successfully")
 
+# Function to add a new author to the authors table
 def add_authors(author_name, author_age):
     conn = sqlite3.connect('LMS.db')
     cursor = conn.cursor()
@@ -92,6 +111,7 @@ def add_authors(author_name, author_age):
     conn.close()
     print(f"Author {author_name} added successfully")
 
+# Function to add a new book to the books library
 def add_books(title, publish_year, descriptions, author_id):
     conn = sqlite3.connect('LMS.db')
     cursor = conn.cursor()
@@ -100,6 +120,7 @@ def add_books(title, publish_year, descriptions, author_id):
     conn.close()
     print(f"{title} added to the book library")
 
+# Function to add a borrow record for a book
 def add_borrow_record(book_code, borrow_date, members_library_card_id):
     conn = sqlite3.connect('LMS.db')
     cursor = conn.cursor()
@@ -108,6 +129,7 @@ def add_borrow_record(book_code, borrow_date, members_library_card_id):
     conn.close()
     print(f"Borrow record for book code {book_code} added")
 
+# Function to record issues related to book borrowing
 def record_book_issues(book_issue_status, members_library_card_id, overdue_records, overdue_notices, total_fine_amount, borrow_no):
     conn = sqlite3.connect('LMS.db')
     cursor = conn.cursor()
@@ -116,6 +138,8 @@ def record_book_issues(book_issue_status, members_library_card_id, overdue_recor
     conn.close()
     print(f"Book issue ({book_issue_status}) record added")
 
+# Main function to drive the library management operations
+# Main loop for user interaction
 def main():
     create_tables()
     while True:
