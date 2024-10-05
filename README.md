@@ -1,6 +1,6 @@
 # Library Management System (LMS)
 
-This Python application is a simple yet functional Library Management System (LMS) that utilizes SQLite for database management. It allows users to manage members, authors, books, and borrowing records through a command-line interface.
+This project is a simple Library Management System (LMS) that utilizes SQLite3 for database management. It allows users to manage members, authors, books, and borrowing records through a command-line interface.
 
 ## Features
 
